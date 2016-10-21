@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import NewsData from './NewsData';
+import NewsData from './data/NewsData';
 import Sort from './Sort.js';
 import SortMe from './SortMe.js';
 import NewsText from './NewsText.js';
@@ -56,8 +56,11 @@ class App extends Component {
   toggleStar(ind){
     var newsData=this.state.newsData.slice(0);
     newsData = newsData.map(obj => Object.assign({},obj));
-    if(newsData[ind].starred) newsData[ind].starred=false;
-    else newsData[ind].starred = true;
+    if(this.backup){
+    this.backup = this.backup.map((val)=> {if(val.votes===newsData[ind].votes && val.content === newsData[ind].content && val.starred === newsData[ind].starred ){ val.starred = !val.starred;console.log('HERE'); }; return val;}  );
+
+  }
+    newsData[ind].starred = !newsData[ind].starred;
     this.setState({
       newsData,
     });
